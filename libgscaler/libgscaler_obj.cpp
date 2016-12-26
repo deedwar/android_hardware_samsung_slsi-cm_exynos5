@@ -1172,8 +1172,8 @@ int CGscaler::m_gsc_out_config(void *handle,
         sd_fmt.format.width  = gsc->dst_img.w;
         sd_fmt.format.height = gsc->dst_img.h;
     }
-    sd_fmt.format.code = rgb ? V4L2_MBUS_FMT_XRGB8888_4X8_LE :
-                               V4L2_MBUS_FMT_YUV8_1X24;
+    sd_fmt.format.code = rgb ? 0x100d :
+                               0x2013;
     if (exynos_subdev_s_fmt(gsc->mdev.gsc_sd_entity->fd, &sd_fmt) < 0) {
             ALOGE("%s::GSC subdev set format failed", __func__);
             return -1;
@@ -1207,8 +1207,8 @@ int CGscaler::m_gsc_out_config(void *handle,
     }
 
     sd_fmt.which = V4L2_SUBDEV_FORMAT_ACTIVE;
-    sd_fmt.format.code = rgb ? V4L2_MBUS_FMT_XRGB8888_4X8_LE :
-                               V4L2_MBUS_FMT_YUV8_1X24;
+    sd_fmt.format.code = rgb ? 0x100d :
+                               0x2013;
     if (exynos_subdev_s_fmt(gsc->mdev.sink_sd_entity->fd, &sd_fmt) < 0) {
         ALOGE("%s::sink:set format failed (PAD=%d)", __func__,
         sd_fmt.pad);
@@ -1239,7 +1239,7 @@ int CGscaler::m_gsc_out_config(void *handle,
         sd_fmt.which = V4L2_SUBDEV_FORMAT_ACTIVE;
         sd_fmt.format.width = gsc->dst_img.w + gsc->dst_img.x*2;
         sd_fmt.format.height = gsc->dst_img.h + gsc->dst_img.y*2;
-        sd_fmt.format.code = V4L2_MBUS_FMT_XRGB8888_4X8_LE;
+		sd_fmt.format.code = 0x100d;
         if (exynos_subdev_s_fmt(gsc->mdev.sink_sd_entity->fd, &sd_fmt) < 0) {
             ALOGE("%s::sink:set format failed (PAD=%d)", __func__,
             sd_fmt.pad);
